@@ -1,4 +1,7 @@
-import { UniversalPrivacyHookDemo } from "@/components/UniversalPrivacyHookDemo";
+import { UniversalPrivacyHookDemo } from "@/components/UniversalPrivacyHookDemo_stable";
+
+
+
 
 export default function Home() {
   return (

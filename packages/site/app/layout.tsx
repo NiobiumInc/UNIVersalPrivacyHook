@@ -17,7 +17,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`antialiased`}>
-        <div className="fixed inset-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/BackgroundImage.png')" }}></div>
+        <div className="fixed inset-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/niobium.png')" }}></div>
         
         {/* Professional App Shell */}
         <Providers>

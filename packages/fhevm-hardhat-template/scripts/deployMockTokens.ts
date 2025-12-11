@@ -6,7 +6,10 @@ async function main() {
   console.log("Deploying Mock tokens with account:", deployer.address);
   
   // Verify deployer
-  const expectedAddress = "0x0cD73A4E3d34D5488BC4E547fECeDAc86305dB9d";
+  // PLACEHOLDER: I am replacing it with MY Waller Address
+  //const expectedAddress = "0x0cD73A4E3d34D5488BC4E547fECeDAc86305dB9d";
+  const expectedAddress = "0xE96144f453EE63cF302431fF666aA954aC98f57b";
+ 
   if (deployer.address.toLowerCase() !== expectedAddress.toLowerCase()) {
     console.error(`Wrong deployer! Expected: ${expectedAddress}, Got: ${deployer.address}`);
     process.exit(1);

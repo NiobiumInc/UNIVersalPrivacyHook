@@ -117,7 +117,7 @@ async function main() {
   //const hookAddress = "0x32841c9E0245C4B1a9cc29137d7E1F078e6f0080";
   //const usdcAddress = "0x59dd1A3Bd1256503cdc023bfC9f10e107d64C3C1";
   //const usdtAddress = "0xB1D9519e953B8513a4754f9B33d37eDba90c001D";
-  const hookAddress = "0x9078D30062A5b50621A5635Ed75e1EA0449F0080";
+  const hookAddress = "0x0000000000000000000000000000000000000000";
   const usdcAddress = "0x792f8182d6737a977c68f606826C462C185Daa68";
   const usdtAddress = "0xde632641A6a1ff2251c3E28F6B83750016741984";
 

@@ -22,8 +22,10 @@ import {
     externalEaddress,
     externalEuint32,
     externalEuint256
-} from "@fhevm/solidity/lib/FHE.sol";
-import {SepoliaConfig} from "@fhevm/solidity/config/ZamaConfig.sol";
+} from "fhevm/solidity/lib/FHE.sol";
+// import {SepoliaConfig} from "@fhevm/solidity/config/ZamaConfig.sol";
+import {SepoliaFHEVMConfig as SepoliaConfig} from "fhevm/solidity/config/FHEVMConfig.sol";
+
 
 // Currency type wrapper to match Uniswap V4
 type Currency is address;

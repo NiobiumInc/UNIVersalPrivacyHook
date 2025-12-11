@@ -5,13 +5,20 @@ import { useUniversalPrivacyHook } from '../hooks/useUniversalPrivacyHook';
 import { useMetaMaskEthersSigner } from '../hooks/metamask/useMetaMaskEthersSigner';
 import { CONTRACTS } from '../config/contracts';
 import { useFhevm } from '../fhevm/useFhevm';
-import { ethers } from 'ethers';
+import { ethers, formatUnits } from 'ethers';
 import { useInMemoryStorage } from '../hooks/useInMemoryStorage';
 import toast from 'react-hot-toast';
 import { Button } from './ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Input } from './ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
+import React, {useRef} from 'react';
+import {computeHandles } from '../services/handles';
+import { fromHexString } from '@/services/utils';
+import { BatchTransactionManager } from './BatchTransactionManager';
+import { BatchTransactionManagerDUMMY } from './BatchTransactionManagerDUMMY';
+
+
 import {
   Select,
   SelectContent,
@@ -44,8 +51,148 @@ declare global {
   }
 }
 
+const DEBUG_FHE = true; // Set to false to disable debug logs
+
+function debugLog(section: string, data: any) {
+  if (!DEBUG_FHE) return;
+  console.group(`[FHE DEBUG - ${section}]`);
+  console.log(JSON.stringify(data, (key, value) =>
+    typeof value === 'bigint' ? value.toString() : value
+  , 2));
+  console.groupEnd();
+}
+
+
+const VERIFYING_CONTRACT_INPUT_VERIFICATION =
+  process.env.NEXT_PUBLIC_VERIFYING_CONTRACT_INPUT_VERIFICATION!;
+const GATEWAY_CHAIN_ID =
+  Number(process.env.NEXT_PUBLIC_GATEWAY_CHAIN_ID ?? 11155111);
+
+function strToBytes(s: string): Uint8Array {
+  if (s.startsWith('0x')) {
+    const hex = s.slice(2);
+    const out = new Uint8Array(hex.length / 2);
+    for (let i = 0; i < out.length; i++) out[i] = parseInt(hex.slice(i*2, i*2+2), 16);
+    return out;
+  }
+  let b64 = s.replace(/\s+/g, '');
+  const mod = b64.length % 4;
+  if (mod !== 0) b64 += '='.repeat(4 - mod);
+  return new Uint8Array(Buffer.from(b64, 'base64'));
+}
+
+
+
+
+
+if (typeof window !== 'undefined' && !(window as any).__relayerFixed) {
+  (window as any).__relayerFixed = true;
+
+  const LOCAL_RELAYER = process.env.NEXT_PUBLIC_RELAYER_URL || 'http://localhost:8080';
+  const ZAMA_RELAYER = 'https://relayer.testnet.zama.cloud';
+  
+  const originalFetch = window.fetch;
+
+  window.fetch = async function(input: RequestInfo | URL, init?: RequestInit): Promise<Response> {
+    const url = typeof input === 'string' ? input : 
+                input instanceof URL ? input.href : 
+                (input as Request).url;
+
+    // Intercept relayer calls
+    if (url.includes(ZAMA_RELAYER) || url.includes('/v1/input-proof')) {
+      const newUrl = url.replace(ZAMA_RELAYER, LOCAL_RELAYER);
+      
+      // ⭐ LOG REQUEST
+      if (init?.body && typeof init.body === 'string') {
+        try {
+          const body = JSON.parse(init.body);
+          console.log('📤 [SDK → RELAYER REQUEST]', {
+            hasCtHandles: !!body.ctHandles,
+            ctHandlesCount: body.ctHandles?.length,
+            ctHandles: body.ctHandles,
+            hasCiphertext: !!body.ciphertextWithInputVerification,
+            ciphertextLength: body.ciphertextWithInputVerification?.length,
+          });
+        }  catch (e) {
+          console.error('Failed to parse body:', e);
+        }
+      }
+      
+      // Fix headers
+      let cleanedInit = init;
+      
+      if (init) {
+        const newHeaders = new Headers();
+        
+        if (init.headers) {
+          if (init.headers instanceof Headers) {
+            init.headers.forEach((value, key) => {
+              if (key.toLowerCase() === 'content-type') {
+                newHeaders.set(key, value.split(',')[0].trim());
+              } else {
+                newHeaders.set(key, value);
+              }
+            });
+          } else if (Array.isArray(init.headers)) {
+            init.headers.forEach(([key, value]) => {
+              if (key.toLowerCase() === 'content-type') {
+                newHeaders.set(key, value.split(',')[0].trim());
+              } else {
+                newHeaders.set(key, value);
+              }
+            });
+          } else {
+            Object.entries(init.headers).forEach(([key, value]) => {
+              if (key.toLowerCase() === 'content-type' && typeof value === 'string') {
+                newHeaders.set(key, value.split(',')[0].trim());
+              } else {
+                newHeaders.set(key, value as string);
+              }
+            });
+          }
+        }
+        
+        if (!newHeaders.has('Content-Type')) {
+          newHeaders.set('Content-Type', 'application/json');
+        }
+        
+        cleanedInit = {
+          ...init,
+          headers: newHeaders
+        };
+      }
+      
+      // Make request
+      const response = await originalFetch(newUrl, cleanedInit);
+      
+      // ⭐ LOG RESPONSE
+      try {
+        const clonedResponse = response.clone();
+        const responseData = await clonedResponse.json();
+        console.group('📥 [RESPONSE FROM RELAYER]');
+        console.log('handles relayer returned:', responseData.response?.handles);
+        console.log('signatures count:', responseData.response?.signatures?.length);
+        console.groupEnd();
+      } catch (e) {
+        console.error('Failed to parse response:', e);
+      }
+      
+      return response;
+    }
+
+    return originalFetch(input, init);
+  };
+
+  console.log('✅ Relayer redirect installed');
+}
+
+
+
+
 export function UniversalPrivacyHookDemo() {
+  const decUsdcRef = useRef<HTMLDivElement | null>(null);
   const { ethersSigner: signer, isConnected, connect, provider, chainId } = useMetaMaskEthersSigner();
+  const hook = useUniversalPrivacyHook(); 
   const [isCorrectNetwork, setIsCorrectNetwork] = useState(false);
   
   // Helper function to get token symbol from address
@@ -74,12 +221,67 @@ export function UniversalPrivacyHookDemo() {
   
   const { storage: fhevmDecryptionSignatureStorage } = useInMemoryStorage();
   
+
+  const EXTRA_RELAYER_SIGNERS =
+    (process.env.NEXT_PUBLIC_RELAYER_SIGNER ?? "")
+      .split(",").map(s => s.trim()).filter(Boolean);
+
+  console.log("[frontend] domain vc:", VERIFYING_CONTRACT_INPUT_VERIFICATION, "gw:", GATEWAY_CHAIN_ID);
+  console.log("[frontend] extra signers:", EXTRA_RELAYER_SIGNERS);
+
+  
+  const baseOpts = {
+    provider:provider as any,
+    chainId,
+    enabled: isConnected && isCorrectNetwork,
+    // ✅ Make sure your hook/SDK gets the SAME domain the relayer used
+    gatewayUrl: 'http://localhost:8080',
+
+    verifyingContractAddressInputVerification: '0x7048C39f048125eDa9d678AEbaDfB22F7900a29F',
+    gatewayChainId: 55815,
+    //verifyingContractAddressInputVerification: VERIFYING_CONTRACT_INPUT_VERIFICATION,
+    //gatewayChainId: GATEWAY_CHAIN_ID,
+    //coprocessorSigners: EXTRA_RELAYER_SIGNERS.length > 0 
+    //  ? EXTRA_RELAYER_SIGNERS 
+    //  : ['0x8d8adE312018b5d7207502579C82D312E6E5F843','0xA69268551b917EEbc1F3f5a76478F0ed8DBf8908'], // Fallback
+    thresholdCoprocessorSigners: 0,
+  };
+  
+  const { instance: fhevmInstance } = useFhevm(baseOpts as any); 
+
+        // ⭐ Add this right after:
+  useEffect(() => {
+    if (fhevmInstance) {
+      console.log('🔍 [FHEVM INSTANCE - ALL PROPERTIES]');
+      console.log('Instance keys:', Object.keys(fhevmInstance));
+      console.log('Instance:', fhevmInstance);
+      
+      // Try to find ACL address in different places
+      const possibleAclAddresses = [
+        (fhevmInstance as any).aclContractAddress,
+        (fhevmInstance as any).aclAddress,
+        (fhevmInstance as any)._config?.aclContractAddress,
+        (fhevmInstance as any).config?.aclContractAddress,
+        (fhevmInstance as any).contractAddress,
+      ];
+      
+      console.log('Possible ACL addresses:', possibleAclAddresses.filter(Boolean));
+      
+      // Also check what methods are available
+      console.log('Available methods:', Object.getOwnPropertyNames(Object.getPrototypeOf(fhevmInstance)));
+    }
+  }, [fhevmInstance]);
+
+
+/*
   const { instance: fhevmInstance } = useFhevm({
     provider: provider as any,
     chainId: chainId,
     enabled: isConnected && isCorrectNetwork
   });
-  
+*/
+
+
   const { 
     deposit,
     withdraw, 
@@ -90,6 +292,7 @@ export function UniversalPrivacyHookDemo() {
     decryptBalance,
     fetchUserIntents,
     mintTokens,
+    aggregateEncryptedBalance,
     loading
   } = useUniversalPrivacyHook();
 
@@ -138,6 +341,10 @@ export function UniversalPrivacyHookDemo() {
   const [faucetAmount, setFaucetAmount] = useState('100');
   const [faucetCurrency, setFaucetCurrency] = useState<'USDC' | 'USDT'>('USDC');
   const [lastFaucetTime, setLastFaucetTime] = useState<{ [key: string]: number }>({});
+
+  // HPU Aggregate timiing widget state
+  const [hpuTiming, setHpuTiming] = useState<{ server: number | null; rtt: number | null; n: number } | null>(null);
+  const [isAggregating, setIsAggregating] = useState(false);
 
   // Load processed intents from local storage
   useEffect(() => {
@@ -221,6 +428,16 @@ export function UniversalPrivacyHookDemo() {
 
   // Handlers
   const handleDecryptUSDC = async () => {
+    console.log('[Decrypt] Button clicked usdc');
+    console.warn('[Decrypt] precheck:', {
+      signer: !!signer,
+      fhevmInstance: !!fhevmInstance,
+      fhevmDecryptionSignatureStorage: !!fhevmDecryptionSignatureStorage,
+      encBalanceUSDC,
+    });
+
+    
+    
     if (!fhevmInstance || !signer || !fhevmDecryptionSignatureStorage) return;
     if (!encBalanceUSDC || encBalanceUSDC === '0' || encBalanceUSDC === '0x0000000000000000000000000000000000000000000000000000000000000000') return;
     
@@ -233,11 +450,20 @@ export function UniversalPrivacyHookDemo() {
         fhevmDecryptionSignatureStorage
       );
       setDecryptedBalanceUSDC(decryptedUSDC);
+      
+      const decryptedValue = BigInt(decryptedUSDC as any);
+      const formatted = formatUnits(decryptedValue,6)
+      
+      if (decUsdcRef.current){
+        decUsdcRef.current.textContent = `${formatted} USDC`;
+        setTimeout(() => {if (decUsdcRef.current) decUsdcRef.current.textContent = '';}, 5000);
+      }
     } catch (err) {
       console.error('Error decrypting USDC balance:', err);
     } finally {
       setIsDecryptingUSDC(false);
     }
+
   };
   
   const handleDecryptUSDT = async () => {
@@ -309,108 +535,233 @@ export function UniversalPrivacyHookDemo() {
     }
   };
 
-  const handleSubmitIntent = async () => {
-    // Prevent multiple clicks
-    if (isSubmittingSwap) return;
-    
+
+
+    const handleSubmitIntent = async () => {
+          console.log('🔄 handleSubmitIntent called');
+
+    if (isSubmittingSwap) {
+        console.log('⚠️ Already submitting, ignoring');
+        return;
+    }
     setIsSubmittingSwap(true);
     
     try {
-      if (!fhevmInstance || !signer) {
+        // ===== STEP 1: Pre-flight checks =====
+        debugLog('1. Pre-flight Checks', {
+        fhevmInstance: !!fhevmInstance,
+        signer: !!signer,
+        tokenIn,
+        tokenOut,
+        swapAmount,
+        encBalanceUSDC,
+        encBalanceUSDT
+        });
+
+        if (!fhevmInstance || !signer) {
         toast.error('FHEVM not initialized');
         return;
-      }
-      
-      const encBalance = tokenIn === 'USDC' ? encBalanceUSDC : encBalanceUSDT;
-      if (!encBalance || encBalance === '0') {
+        }
+        
+        const encBalance = tokenIn === 'USDC' ? encBalanceUSDC : encBalanceUSDT;
+        if (!encBalance || encBalance === '0') {
         toast.error(`Deposit ${tokenIn} first`);
         return;
-      }
+        }
 
-      const parsedAmount = ethers.parseUnits(swapAmount, 6);
-      const input = fhevmInstance.createEncryptedInput(
+        // ===== STEP 2: Environment validation =====
+        const userAddr = ethers.getAddress(await signer.getAddress());
+        const walletChainId = await (window as any).ethereum.request({ method: 'eth_chainId' });
+        
+        debugLog('2. Environment Variables', {
+        VERIFYING_CONTRACT_INPUT_VERIFICATION,
+        GATEWAY_CHAIN_ID,
+        UniversalPrivacyHookAddress: CONTRACTS.UniversalPrivacyHook,
+        userAddress: userAddr,
+        walletChainId: parseInt(walletChainId, 16),
+        expectedChainId: 11155111
+        });
+
+        // ===== STEP 3: Amount encryption setup =====
+        const parsedAmount = ethers.parseUnits(swapAmount, 6);
+        const amountBigInt = BigInt(parsedAmount.toString());
+        
+        debugLog('3. Amount Details', {
+        swapAmountInput: swapAmount,
+        parsedAmount: parsedAmount.toString(),
+        amountBigInt: amountBigInt.toString(),
+        amountInTokens: ethers.formatUnits(amountBigInt, 6)
+        });
+
+        // ===== STEP 4: Create encrypted input =====
+        const input = fhevmInstance.createEncryptedInput(
         CONTRACTS.UniversalPrivacyHook,
-        await signer.getAddress()
-      );
-      
-      const amountBigInt = BigInt(parsedAmount.toString());
-      console.log('Encrypting amount:', ethers.formatUnits(amountBigInt, 6), 'tokens');
-      
-      // Try passing BigInt directly like the AVS does
-      if (typeof (input as any).add128 === 'function') {
-        console.log('Using add128 for encryption with BigInt:', amountBigInt);
-        try {
-          // First try with BigInt directly (like AVS)
-          (input as any).add128(amountBigInt);
-        } catch (err) {
-          console.log('BigInt failed, trying with Number:', err);
-          (input as any).add128(Number(amountBigInt));
-        }
-      } else if (typeof (input as any).add64 === 'function') {
-        console.log('Warning: Using add64 instead of add128');
-        // For amounts that don't fit in 64 bits, we need to handle carefully
-        if (amountBigInt <= BigInt(2) ** BigInt(64) - BigInt(1)) {
-          input.add64(Number(amountBigInt));
+        userAddr
+        );
+
+
+        console.log('🔍 [ENCRYPTED INPUT]', {
+          input,
+          inputKeys: Object.keys(input),
+          inputPrototype: Object.getOwnPropertyNames(Object.getPrototypeOf(input)),
+          // Try to access internal config
+          _config: (input as any)._config,
+          _aclAddress: (input as any)._aclAddress,
+          config: (input as any).config,
+        });
+
+
+        // Track encryption method and bit width
+        let encryptionMethod = 'unknown';
+        let bitWidth = 0;
+        
+        if (typeof (input as any).add128 === "function") {
+        (input as any).add128(amountBigInt);
+        encryptionMethod = 'add128';
+        bitWidth = 128;
+        (window as any).__fhe_last_bits = 128;
+        (window as any).__fhe_last_version = 0;
+        } else if (typeof (input as any).add64 === "function") {
+        (input as any).add64(Number(amountBigInt));
+        encryptionMethod = 'add64';
+        bitWidth = 64;
+        (window as any).__fhe_last_bits = 64;
+        (window as any).__fhe_last_version = 0;
         } else {
-          console.error('Amount too large for add64, using MAX_SAFE_INTEGER');
-          input.add64(Number.MAX_SAFE_INTEGER);
+        (input as any).add32(Number(amountBigInt));
+        encryptionMethod = 'add32';
+        bitWidth = 32;
+        (window as any).__fhe_last_bits = 32;
+        (window as any).__fhe_last_version = 0;
         }
-      } else {
-        console.error('No add128/add64, falling back to add32');
-        input.add32(Number(amountBigInt));
-      }
-      
-      const encrypted = await input.encrypt();
-      
-      // Convert handle to hex string
-      const encryptedHandle = '0x' + Array.from(encrypted.handles[0] as Uint8Array)
+
+        debugLog('4. Encryption Method', {
+        method: encryptionMethod,
+        bitWidth,
+        version: 0
+        });
+
+
+        console.log('🔍 [SDK ENCRYPTION PARAMS]', {
+          contractForEncryption: CONTRACTS.UniversalPrivacyHook,
+          userAddress: await signer.getAddress(),
+          aclFromEnv: VERIFYING_CONTRACT_INPUT_VERIFICATION,
+          gatewayChainId: GATEWAY_CHAIN_ID,
+        });
+
+
+
+        // ===== STEP 5: Encrypt and get handles =====
+        let encrypted;
+        try {
+        encrypted = await input.encrypt();
+
+        console.log('🔍 [FRONTEND AFTER ENCRYPT]', {
+          handleComputed: '0x' + Array.from(encrypted.handles[0] as Uint8Array)
+            .map(b => b.toString(16).padStart(2, '0'))
+            .join(''),
+          inputProofFirst32Bytes: '0x' + Array.from((encrypted.inputProof as Uint8Array).slice(0, 32))
+            .map(b => b.toString(16).padStart(2, '0'))
+            .join(''),
+        });
+
+
+
+        
+        debugLog('5. Encryption Result', {
+            handlesCount: encrypted.handles?.length,
+            inputProofLength: encrypted.inputProof?.length,
+            handle0Type: typeof encrypted.handles?.[0],
+            handle0Constructor: encrypted.handles?.[0]?.constructor?.name
+        });
+        } catch (e: any) {
+        console.error('[ENCRYPTION ERROR]', e);
+        const resp = e?.response || e?.cause?.response;
+        if (resp) {
+            try {
+            const text = await resp.text?.();
+            debugLog('5. Relayer Error Response', {
+                status: resp.status,
+                statusText: resp.statusText,
+                body: text
+            });
+            } catch {}
+        }
+        throw e;
+        }
+
+        // ===== STEP 6: Format handles and proof =====
+        const encryptedHandle = '0x' + Array.from(encrypted.handles[0] as Uint8Array)
         .map(b => b.toString(16).padStart(2, '0'))
         .join('');
-      
-      console.log('Encrypted handle:', encryptedHandle);
-      console.log('Input proof length:', encrypted.inputProof.length, 'bytes');
-      
-      const inputProofHex = '0x' + Array.from(encrypted.inputProof as Uint8Array)
+        
+        const inputProofHex = '0x' + Array.from(encrypted.inputProof as Uint8Array)
         .map(b => b.toString(16).padStart(2, '0'))
         .join('');
-      
-      console.log('Submitting intent with:');
-      console.log('- Token In:', tokenIn);
-      console.log('- Token Out:', tokenOut);
-      console.log('- Encrypted handle:', encryptedHandle);
-      console.log('- Input proof (first 20 chars):', inputProofHex.slice(0, 20) + '...');
-      
-      const result = await submitIntent(
+
+        debugLog('6. Formatted Data', {
+        encryptedHandle,
+        encryptedHandleLength: encryptedHandle.length,
+        inputProofHex: inputProofHex.slice(0, 66) + '...',
+        inputProofLength: inputProofHex.length
+        });
+
+        // ===== STEP 7: Submit to contract =====
+        const tokenInContract = CONTRACTS[tokenIn === 'USDC' ? 'EncryptedUSDC' : 'EncryptedUSDT'];
+        const tokenOutContract = CONTRACTS[tokenOut === 'USDC' ? 'EncryptedUSDC' : 'EncryptedUSDT'];
+        
+        debugLog('7. Contract Submission', {
+        tokenIn,
+        tokenOut,
+        tokenInContract,
+        tokenOutContract,
+        hookContract: CONTRACTS.UniversalPrivacyHook
+        });
+
+        const result = await submitIntent(
         tokenIn,
         tokenOut,
         encryptedHandle,
         inputProofHex
-      );
-      
-      if (result?.intentId) {
+        );
+        
+        debugLog('8. Submission Result', {
+        success: !!result?.intentId,
+        intentId: result?.intentId,
+        txHash: result?.txHash
+        });
+        
+        if (result?.intentId) {
         toast.success(
-          <div>
+            <div>
             Intent submitted!
             {result.txHash && (
-              <a 
+                <a 
                 href={`https://sepolia.etherscan.io/tx/${result.txHash}`} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="block text-xs text-blue-600 hover:underline mt-1"
-              >
+                >
                 View transaction →
-              </a>
+                </a>
             )}
-          </div>
+            </div>
         );
         setSwapAmount('');
-      }
+        }
     } catch (err: any) {
-      toast.error(err.message || 'Failed to submit intent');
+        debugLog('ERROR', {
+        message: err.message,
+        code: err.code,
+        reason: err.reason,
+        stack: err.stack?.split('\n').slice(0, 5)
+        });
+        toast.error(err.message || 'Failed to submit intent');
     } finally {
-      setIsSubmittingSwap(false);
+        setIsSubmittingSwap(false);
     }
-  };
+    };
+
 
   const handleExecuteIntent = async (intentId: string) => {
     setExecutingIntentId(intentId);
@@ -632,6 +983,7 @@ export function UniversalPrivacyHookDemo() {
                   </Button>
                 )}
               </div>
+              <div ref={decUsdcRef} className='text-sm text-green-600 mt-1 font-semibold'></div>
             </div>
             <div className="flex items-center justify-between p-4 bg-gradient-to-r from-orange-50 to-red-50/30 rounded-lg">
               <div className="flex items-center gap-3">
@@ -1058,6 +1410,65 @@ export function UniversalPrivacyHookDemo() {
             </p>
           </div>
           
+
+          <div className="mt-3 space-y-2">
+            <Button
+              onClick={async () => {
+                if (!aggregateEncryptedBalance) return;
+
+                try {
+                  setIsAggregating(true);
+
+                  // Use whichever encrypted handles you currently have (USDC/USDT)
+                  const handles: string[] = [];
+                  if (encBalanceUSDC && encBalanceUSDC !== '0') handles.push(encBalanceUSDC);
+                  if (encBalanceUSDT && encBalanceUSDT !== '0') handles.push(encBalanceUSDT);
+
+                  if (handles.length === 0) {
+                    toast.error('No encrypted balances to aggregate.');
+                    return;
+                  }
+
+                  // Token address only matters if you later decrypt the aggregate with SDK.
+                  const tokenAddr = CONTRACTS.EncryptedUSDC;
+
+                  const res: any = await aggregateEncryptedBalance(handles, tokenAddr);
+                  // Expect shape from /compute_vec: { success, result, count, error, computation_time_ms }
+                  if (!res || res.success === false) {
+                    toast.error(res?.error || 'HPU aggregation failed');
+                    return;
+                  }
+
+                  setHpuTiming({
+                    server: res.computation_time_ms ?? null,
+                    rtt: null,          // we didn’t measure RTT here
+                    n: res.count ?? handles.length,
+                  });
+
+                  toast.success('HPU aggregate finished.');
+                } catch (e: any) {
+                  toast.error(String(e.message || e));
+                } finally {
+                  setIsAggregating(false);
+                }
+              }}
+              disabled={isAggregating}
+              variant="outline"
+            >
+              {isAggregating ? <RefreshCw className="h-4 w-4 mr-2 animate-spin" /> : null}
+              HPU Aggregate
+            </Button>
+
+            {hpuTiming && (
+              <div className="text-xs opacity-80 mt-2">
+                HPU compute: {hpuTiming.server ?? '—'} ms (server)
+                {hpuTiming.rtt !== null ? <> · {Math.round(hpuTiming.rtt)} ms RTT</> : null}
+                {' '}· n={hpuTiming.n}
+              </div>
+            )}
+          </div>
+
+
           <Button
             onClick={async () => {
               try {
@@ -1105,6 +1516,13 @@ export function UniversalPrivacyHookDemo() {
           </div>
         </CardContent>
       </Card>
+
+      {/* NEW: Batch Transactions Component */}
+      <BatchTransactionManager 
+        hook={hook}
+        isConnected={isConnected}
+        signer={signer}
+      />
       </div>
     </div>
   );

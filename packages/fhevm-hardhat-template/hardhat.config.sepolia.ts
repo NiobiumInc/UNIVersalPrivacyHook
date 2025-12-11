@@ -16,6 +16,8 @@ dotenv.config();
 // Support both .env and hardhat vars
 const PRIVATE_KEY: string = process.env.PRIVATE_KEY || vars.get("PRIVATE_KEY", "");
 const ANKR_API_KEY: string = process.env.ANKR_API_KEY || vars.get("ANKR_API_KEY", "");
+const NBM_RPC_URL: string = process.env.NBM_RPC_URL || vars.get("NBM_RPC_URL", "");
+
 
 const config: HardhatUserConfig = {
   defaultNetwork: "sepolia",
@@ -30,6 +32,11 @@ const config: HardhatUserConfig = {
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
       chainId: 11155111,
       url: ANKR_API_KEY ? `https://rpc.ankr.com/eth_sepolia/${ANKR_API_KEY}` : "https://rpc.ankr.com/eth_sepolia",
+    },
+    NBMsepolia: {
+      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
+      chainId: 11155111,
+      url: NBM_RPC_URL,
     },
   },
   paths: {

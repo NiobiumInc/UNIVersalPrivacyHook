@@ -10,7 +10,10 @@ async function main() {
   console.log("Deploying with account:", deployer.address);
   
   // Verify deployer
-  const expectedAddress = "0x0cD73A4E3d34D5488BC4E547fECeDAc86305dB9d";
+
+  //const expectedAddress = "0x0cD73A4E3d34D5488BC4E547fECeDAc86305dB9d";
+  const expectedAddress = deployer.address;
+
   if (deployer.address.toLowerCase() !== expectedAddress.toLowerCase()) {
     console.error(`Wrong deployer! Expected: ${expectedAddress}, Got: ${deployer.address}`);
     process.exit(1);

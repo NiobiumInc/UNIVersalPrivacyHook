@@ -3,6 +3,11 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
+// new to check
+import '@/lib/fetch-tap';
+console.log('[fetch-tap] loaded');
+
+
 export default function LoginPage() {
   const router = useRouter();
 
