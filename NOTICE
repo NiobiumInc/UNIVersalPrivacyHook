@@ -2,7 +2,7 @@ THIRD-PARTY SOFTWARE NOTICES AND INFORMATION
 ============================================================
 
 Project: UNIVersalPrivacyHook
-Generated: 2026-09-27
+Generated: 2026-10-03
 Tool: SCANOSS (snippet detection with License dataset)
 Components: 53
 
@@ -15,7 +15,6 @@ notices as required by those licenses.
 WARNING: The following component(s) have no license information.
 These require manual review to determine licensing terms.
 
-  - fhevm-sdk-universal (https://www.npmjs.com/package/fhevm-sdk-universal)
   - kamaji-console (https://github.com/clastix/kamaji-console)
 
 ------------------------------------------------------------
@@ -35,6 +34,7 @@ LICENSE SUMMARY
   GPL-3.0-or-later [COPYLEFT]: 1 component(s)
   ISC: 4 component(s)
   MIT: 31 component(s)
+  UNKNOWN: 1 component(s)
   UNLICENSED: 1 component(s)
 
 ------------------------------------------------------------
@@ -73,6 +73,14 @@ COMPONENT ATTRIBUTIONS
   Source: https://github.com/nilay27/alphaengine
   PURL: pkg:github/nilay27/alphaengine
   Copyright:
+    Copyright 2007 Free Software Foundation Inc.  http:  fsf.org
+    Copyright 2007 Free Software Foundation Inc.  https:  fsf.org
+    Copyright 2016-2023 zOS Global Limited and contributors
+    Copyright 2017 MariaDB Corporation Ab All Rights Reserved
+    Copyright 2020 Compound Labs Inc
+    Copyright 2020-2021 Optimism
+    Copyright 2023 Layr Labs Inc
+    Copyright 2024 Eigen Labs Inc
     Copyright 2025 ZAMA
   License: BSD-3-Clause
 
@@ -152,7 +160,7 @@ COMPONENT ATTRIBUTIONS
   License: ISC
 
   eigenlayer-contracts
-  Version: v0.3.0-rc1-holesky-preprod-payments
+  Version: v0.3.1-holesky-longtail
   Source: https://github.com/layr-labs/eigenlayer-contracts
   PURL: pkg:github/layr-labs/eigenlayer-contracts
   Copyright:
@@ -239,20 +247,21 @@ COMPONENT ATTRIBUTIONS
   Version: 0.1.0
   Source: https://www.npmjs.com/package/fhevm-sdk-universal
   PURL: pkg:npm/fhevm-sdk-universal
-  License: UNKNOWN — requires manual review
+  License: UNKNOWN
+
+  forge-std
+  Version: v1.0.0
+  Source: https://github.com/foundry-rs/forge-std
+  PURL: pkg:github/foundry-rs/forge-std
+  Copyright:
+    Copyright 2021 Brock Elmore
+    Copyright Contributors to Forge Standard Library
+  License: Apache-2.0
 
   forge-std
   Version: v1.9.4
   Source: https://github.com/brockelmore/forge-std
   PURL: pkg:github/brockelmore/forge-std
-  Copyright:
-    Copyright 2021 Brock Elmore
-  License: Apache-2.0
-
-  forge-std
-  Version: v1.8.2
-  Source: https://github.com/foundry-rs/forge-std
-  PURL: pkg:github/foundry-rs/forge-std
   Copyright:
     Copyright 2021 Brock Elmore
   License: Apache-2.0
@@ -367,7 +376,7 @@ COMPONENT ATTRIBUTIONS
     Copyright 2016 Smart Contract Solutions Inc
     Copyright 2016-2025 Zeppelin Group Ltd
     Copyright 2016-2026 Zeppelin Group Ltd
-    Copyright 2020 Compound Labs; Inc.
+    Copyright 2020 Compound Labs Inc
     Copyright (c) 2016-2019 zOS Global Limited
     Copyright (c) 2016-2020 zOS Global Limited
     Copyright (c) 2016-2022 zOS Global Limited and contributors
@@ -397,7 +406,7 @@ COMPONENT ATTRIBUTIONS
     Copyright 2016 Smart Contract Solutions Inc
     Copyright 2016-2025 Zeppelin Group Ltd
     Copyright 2016-2026 Zeppelin Group Ltd
-    Copyright 2020 Compound Labs; Inc.
+    Copyright 2020 Compound Labs Inc
     Copyright (c) 2016-2020 zOS Global Limited
     Copyright (c) 2016-2022 zOS Global Limited and contributors
     Copyright (c) 2016-2023 zOS Global Limited and contributors
@@ -412,7 +421,9 @@ COMPONENT ATTRIBUTIONS
   Copyright:
     (C) 2007 Free Software Foundation; Inc. <https:  fsf.org >
     (c) 2021 Toubkal Lab
-    Copyright (c) 2021 Dmitry
+    Copyright 2007 Free Software Foundation Inc.  lt; http:  fsf.org   gt;_
+    Copyright 2021 Dmitry
+    Copyright 2023 Marco Jardim
   License: MIT
 
   setup-helpers
@@ -757,6 +768,11 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+--- UNKNOWN ---
+
+Full license text available at: https://spdx.org/licenses/UNKNOWN.html
 
 
 --- GPL-3.0-or-later ---
