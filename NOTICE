@@ -2,9 +2,9 @@ THIRD-PARTY SOFTWARE NOTICES AND INFORMATION
 ============================================================
 
 Project: UNIVersalPrivacyHook
-Generated: 2026-04-25
+Generated: 2026-09-27
 Tool: SCANOSS (snippet detection with License dataset)
-Components: 68
+Components: 53
 
 This file lists all third-party software components detected
 in this repository, along with their licenses and copyright
@@ -15,59 +15,37 @@ notices as required by those licenses.
 WARNING: The following component(s) have no license information.
 These require manual review to determine licensing terms.
 
-  - @trinkler/htlc (https://www.npmjs.com/package/%40trinkler/htlc)
   - fhevm-sdk-universal (https://www.npmjs.com/package/fhevm-sdk-universal)
-  - zama-fhe (https://github.com/0xmoei/zama-fhe)
+  - kamaji-console (https://github.com/clastix/kamaji-console)
 
 ------------------------------------------------------------
 
 LICENSE SUMMARY
 
+  AGPL-3.0: 1 component(s)
   AGPL-3.0-only [COPYLEFT]: 1 component(s)
-  Apache-2.0: 7 component(s)
-  BSD-3-Clause: 2 component(s)
-  BSD-3-Clause-Clear: 2 component(s)
+  Apache-2.0: 6 component(s)
+  BSD-3-Clause: 3 component(s)
+  BSD-3-Clause-Clear: 1 component(s)
   BUSL-1.1: 2 component(s)
-  BUSL-1.1 AND MIT AND BUSL-1.1: 2 component(s)
-  Business-Source-License-1.1: 2 component(s)
+  BUSL-1.1 AND MIT AND BUSL-1.1: 1 component(s)
+  Business-Source-License-1.1: 4 component(s)
   GPL-2.0-only [COPYLEFT]: 2 component(s)
-  GPL-3.0-only [COPYLEFT]: 5 component(s)
+  GPL-3.0-only [COPYLEFT]: 3 component(s)
   GPL-3.0-or-later [COPYLEFT]: 1 component(s)
   ISC: 4 component(s)
-  MIT: 44 component(s)
-  UNLICENSED: 2 component(s)
+  MIT: 31 component(s)
+  UNLICENSED: 1 component(s)
 
 ------------------------------------------------------------
 
 COMPONENT ATTRIBUTIONS
-
-  @bananapus/router-terminal-v6
-  Version: 0.0.25
-  Source: https://www.npmjs.com/package/%40bananapus/router-terminal-v6
-  PURL: pkg:npm/%40bananapus/router-terminal-v6
-  Copyright:
-    Copyright 2024 Bananapus
-  License: MIT
-
-  @buttercloud/upzaar-ui
-  Version: 1.0.0
-  Source: https://www.npmjs.com/package/%40buttercloud/upzaar-ui
-  PURL: pkg:npm/%40buttercloud/upzaar-ui
-  Copyright:
-    Copyright (c) 2023 Buttercloud
-  License: MIT
 
   @derjacklive/djlui
   Version: 0.0.1
   Source: https://www.npmjs.com/package/%40derjacklive/djlui
   PURL: pkg:npm/%40derjacklive/djlui
   License: ISC
-
-  @sage-protocol/cli
-  Version: 0.4.8
-  Source: https://www.npmjs.com/package/%40sage-protocol/cli
-  PURL: pkg:npm/%40sage-protocol/cli
-  License: Apache-2.0
 
   @simbachain/web3-suites
   Version: 2.0.0
@@ -84,62 +62,19 @@ COMPONENT ATTRIBUTIONS
   PURL: pkg:npm/%40thirdweb-dev/dynamic-contracts
   License: MIT
 
-  @tollbit/react-integrate-tile
-  Version: 0.0.5
-  Source: https://www.npmjs.com/package/%40tollbit/react-integrate-tile
-  PURL: pkg:npm/%40tollbit/react-integrate-tile
-  License: MIT
-
-  @trinkler/htlc
-  Version: 0.1.0
-  Source: https://www.npmjs.com/package/%40trinkler/htlc
-  PURL: pkg:npm/%40trinkler/htlc
-  License: UNKNOWN — requires manual review
-
   @v2swap/launchpad
   Version: 0.0.1
   Source: https://www.npmjs.com/package/%40v2swap/launchpad
   PURL: pkg:npm/%40v2swap/launchpad
   License: ISC
 
-  @wavs/solidity
-  Version: 0.4.0-beta.1
-  Source: https://www.npmjs.com/package/%40wavs/solidity
-  PURL: pkg:npm/%40wavs/solidity
+  alphaengine
+  Version: a565e84
+  Source: https://github.com/nilay27/alphaengine
+  PURL: pkg:github/nilay27/alphaengine
   Copyright:
-    Copyright 2007 Free Software Foundation; Inc. <http:  fsf.org >
-    Copyright 2007 Free Software Foundation; Inc. <https:  fsf.org >
-    Copyright 2016-2023 zOS Global Limited and contributors
-    Copyright 2020 Compound Labs; Inc.
-    Copyright 2020-2021 Optimism
-    Copyright 2024 Eigen Labs Inc
-    Copyright 2024 Eigen Labs; Inc.
-    Copyright 2025 Layer Labs (Cayman)
-  License: MIT
-
-  @webb-tools/contracts
-  Version: 0.5.18
-  Source: https://www.npmjs.com/package/%40webb-tools/contracts
-  PURL: pkg:npm/%40webb-tools/contracts
-  Copyright:
-    (C) 2007 Free Software Foundation; Inc. <https:  fsf.org >
-  License: Apache-2.0, GPL-3.0-or-later, MIT
-
-  @zoralabs/protocol-rewards
-  Version: 1.0.2
-  Source: https://www.npmjs.com/package/%40zoralabs/protocol-rewards
-  PURL: pkg:npm/%40zoralabs/protocol-rewards
-  Copyright:
-    Copyright (c) 2023 Zora
-  License: MIT
-
-  ARBBot2025
-  Version: v.1
-  Source: https://github.com/theburgerllc/ARBBot2025
-  PURL: pkg:github/theburgerllc/arbbot2025
-  Copyright:
-    Copyright 2025 theburgerllc
-  License: MIT
+    Copyright 2025 ZAMA
+  License: BSD-3-Clause
 
   astrologyclub
   Version: v0.0.1
@@ -176,30 +111,18 @@ COMPONENT ATTRIBUTIONS
 
   cofhe-contracts
   Version: v0.0.13
-  Source: https://github.com/FhenixProtocol/cofhe-contracts
+  Source: https://github.com/fhenixprotocol/cofhe-contracts
   PURL: pkg:github/fhenixprotocol/cofhe-contracts
   Copyright:
     Copyright 2024 Fhenix
   License: MIT
 
   cofhe-mock-contracts
-  Version: v0.0.2
+  Version: v0.2.1-alpha.3
   Source: https://github.com/FhenixProtocol/cofhe-mock-contracts
   PURL: pkg:github/fhenixprotocol/cofhe-mock-contracts
   Copyright:
     Copyright 2024 Fhenix
-  License: MIT
-
-  contracts
-  Version: v0.2.0
-  Source: https://github.com/btr-supply/contracts
-  PURL: pkg:github/btr-supply/contracts
-  License: MIT
-
-  create-fhevm-react
-  Version: 1.1.5
-  Source: https://www.npmjs.com/package/create-fhevm-react
-  PURL: pkg:npm/create-fhevm-react
   License: MIT
 
   cz-conventional-clubhouse
@@ -257,15 +180,9 @@ COMPONENT ATTRIBUTIONS
     Copyright copyright (c) 2017 MariaDB Corporation Ab; All Rights Reserved.
   License: BUSL-1.1, BUSL-1.1 AND MIT AND BUSL-1.1, GPL-2.0-only, MIT, UNLICENSED
 
-  emblem-vault-evm
-  Version: mainnet-deployment-2025-01-04
-  Source: https://github.com/sammyshakes/emblem-vault-evm
-  PURL: pkg:github/sammyshakes/emblem-vault-evm
-  License: MIT
-
   ERC20Token
   Version: v0.8
-  Source: https://github.com/TemuujinTMJ/ERC20Token
+  Source: https://github.com/temuujintmj/erc20token
   PURL: pkg:github/temuujintmj/erc20token
   License: MIT
 
@@ -275,8 +192,7 @@ COMPONENT ATTRIBUTIONS
   PURL: pkg:github/a16z/erc4626-tests
   Copyright:
     (C) 2007 Free Software Foundation; Inc. <https:  fsf.org >
-    Copyright 2007 Free Software Foundation; Inc. <https:  fsf.org >
-  License: AGPL-3.0-only
+  License: AGPL-3.0, AGPL-3.0-only
 
   ernestognw-dummy-contracts
   Version: 0.2.0
@@ -296,31 +212,11 @@ COMPONENT ATTRIBUTIONS
     Copyright Matt Condon (@shrugs)
   License: MIT
 
-  ethshanghai-2025
-  Version: 2391781
-  Source: https://github.com/ethpanda-org/ethshanghai-2025
-  PURL: pkg:github/ethpanda-org/ethshanghai-2025
+  evm-hack-registry
+  Version: c5260b0
+  Source: https://github.com/sanbir/evm-hack-registry
+  PURL: pkg:github/sanbir/evm-hack-registry
   License: MIT
-
-  examples
-  Version: 985f49c
-  Source: https://github.com/hyperbrowserai/examples
-  PURL: pkg:github/hyperbrowserai/examples
-  Copyright:
-    Copyright 2025 hyperbrowserai
-  License: MIT
-
-  fhenix-contracts
-  Version: v0.2.1-beta.1
-  Source: https://github.com/fhenixprotocol/fhenix-contracts
-  PURL: pkg:github/fhenixprotocol/fhenix-contracts
-  License: MIT
-
-  fhevm-counter-sepolia
-  Version: ecac253
-  Source: https://github.com/nerevarine22/fhevm-counter-sepolia
-  PURL: pkg:github/nerevarine22/fhevm-counter-sepolia
-  License: BSD-3-Clause-Clear
 
   fhevm-hardhat-template
   Version: 016d4ba
@@ -345,35 +241,33 @@ COMPONENT ATTRIBUTIONS
   PURL: pkg:npm/fhevm-sdk-universal
   License: UNKNOWN — requires manual review
 
-  flaunch-sdk
-  Version: @flaunch/sdk@0.9.1
-  Source: https://github.com/flayerlabs/flaunch-sdk
-  PURL: pkg:github/flayerlabs/flaunch-sdk
-  License: MIT
-
   forge-std
   Version: v1.9.4
   Source: https://github.com/brockelmore/forge-std
   PURL: pkg:github/brockelmore/forge-std
+  Copyright:
+    Copyright 2021 Brock Elmore
   License: Apache-2.0
 
   forge-std
   Version: v1.8.2
   Source: https://github.com/foundry-rs/forge-std
   PURL: pkg:github/foundry-rs/forge-std
+  Copyright:
+    Copyright 2021 Brock Elmore
   License: Apache-2.0
 
   git.luolix.top/oxisto/money-gopher
-  Version: v0.2.1
-  Source: https://proxy.golang.org/git.luolix.top/oxisto/money-gopher/@v/v0.2.1.zip
+  Version: v0.1.1-0.20241119023347-98e34e401646
+  Source: https://proxy.golang.org/git.luolix.top/oxisto/money-gopher/@v/v0.1.1-0.20241119023347-98e34e401646.zip
   PURL: pkg:golang/git.luolix.top/oxisto/money-gopher
   Copyright:
     Copyright copyright owner or entity authorized by
   License: Apache-2.0
 
-  github.com/aydogduyusuf/dbchain
-  Version: v0.0.0-20220829131120-81aa83c40be8
-  Source: https://proxy.golang.org/github.com/aydogduyusuf/dbchain/@v/v0.0.0-20220829131120-81aa83c40be8.zip
+  github.com/aydogduyusuf/DBchain
+  Version: v0.0.0-20220824132739-e7e7de56d625
+  Source: https://proxy.golang.org/github.com/aydogduyusuf/dbchain/@v/v0.0.0-20220824132739-e7e7de56d625.zip
   PURL: pkg:golang/github.com/aydogduyusuf/dbchain
   License: MIT
 
@@ -381,15 +275,41 @@ COMPONENT ATTRIBUTIONS
   Version: v0.0.0-20230303225253-e282159d5170
   Source: https://proxy.golang.org/github.com/dapphub/ds-test/@v/v0.0.0-20230303225253-e282159d5170.zip
   PURL: pkg:golang/github.com/dapphub/ds-test
-  License: GPL-3.0-only
+  Copyright:
+    Copyright 2007 Free Software Foundation Inc.  http:  fsf.org
+  License: GPL-3.0-only, GPL-3.0-or-later
+
+  github.com/foundry-rs/forge-std
+  Version: v1.3.1-0.20230125230628-4a79aca83f80
+  Source: https://proxy.golang.org/github.com/foundry-rs/forge-std/@v/v1.3.1-0.20230125230628-4a79aca83f80.zip
+  PURL: pkg:golang/github.com/foundry-rs/forge-std
+  Copyright:
+    Copyright 2021 Brock Elmore
+  License: Apache-2.0
+
+  github.com/layr-labs/eigenlayer-middleware
+  Version: v0.0.0-20231027233207-1d4e379e22cb
+  Source: https://proxy.golang.org/github.com/layr-labs/eigenlayer-middleware/@v/v0.0.0-20231027233207-1d4e379e22cb.zip
+  PURL: pkg:golang/github.com/layr-labs/eigenlayer-middleware
+  Copyright:
+    Copyright 2023 Layr Labs Inc
+  License: Business-Source-License-1.1
 
   github.com/Layr-Labs/incredible-squaring-avs
-  Version: v0.0.0-20250401202343-d922e8cc0cd1
-  Source: https://proxy.golang.org/github.com/layr-labs/incredible-squaring-avs/@v/v0.0.0-20250401202343-d922e8cc0cd1.zip
+  Version: v0.0.0-20241021143147-83e64c8f1143
+  Source: https://proxy.golang.org/github.com/layr-labs/incredible-squaring-avs/@v/v0.0.0-20241021143147-83e64c8f1143.zip
   PURL: pkg:golang/github.com/layr-labs/incredible-squaring-avs
   Copyright:
-    Copyright copyright (c) 2017 MariaDB Corporation Ab; All Rights Reserved.
-  License: Business-Source-License-1.1, UNLICENSED
+    Copyright 2023 Layr Labs Inc
+  License: Business-Source-License-1.1
+
+  github.com/Layr-Labs/zeus-templates
+  Version: v0.0.0-20250702164845-eb1861b30c4c
+  Source: https://proxy.golang.org/github.com/layr-labs/zeus-templates/@v/v0.0.0-20250702164845-eb1861b30c4c.zip
+  PURL: pkg:golang/github.com/layr-labs/zeus-templates
+  Copyright:
+    Copyright 2017 MariaDB Corporation Ab All Rights Reserved
+  License: Business-Source-License-1.1
 
   gnt2
   Version: ef590b8
@@ -400,24 +320,16 @@ COMPONENT ATTRIBUTIONS
   License: GPL-3.0-only
 
   hello-world-avs
-  Version: d212adc
+  Version: a9e4405
   Source: https://github.com/layr-labs/hello-world-avs
   PURL: pkg:github/layr-labs/hello-world-avs
   License: MIT
 
-  incredible-squaring-avs
-  Version: 4f75fe3
-  Source: https://github.com/layr-labs/incredible-squaring-avs
-  PURL: pkg:github/layr-labs/incredible-squaring-avs
-  Copyright:
-    Copyright copyright (c) 2017 MariaDB Corporation Ab; All Rights Reserved.
-  License: BUSL-1.1 AND MIT AND BUSL-1.1
-
-  inspiregem
-  Version: a6bf456
-  Source: https://github.com/arhanansari/inspiregem
-  PURL: pkg:github/arhanansari/inspiregem
-  License: MIT
+  kamaji-console
+  Version: helm-v0.0.1
+  Source: https://github.com/clastix/kamaji-console
+  PURL: pkg:github/clastix/kamaji-console
+  License: UNKNOWN — requires manual review
 
   library
   Version: v1.0.0
@@ -439,14 +351,6 @@ COMPONENT ATTRIBUTIONS
   PURL: pkg:github/metamask/metamask-sdk-examples
   License: MIT
 
-  meupetminhavida-front
-  Version: 1.0.0
-  Source: https://github.com/otaldonuness/meupetminhavida-front
-  PURL: pkg:github/otaldonuness/meupetminhavida-front
-  Copyright:
-    (C) 2007 Free Software Foundation; Inc. <https:  fsf.org >
-  License: GPL-3.0-only
-
   naga_contracts
   Version: v1.0.0
   Source: https://github.com/d0scoo1/naga_contracts
@@ -460,6 +364,7 @@ COMPONENT ATTRIBUTIONS
   Source: https://github.com/openzeppelin/openzeppelin-contracts
   PURL: pkg:github/openzeppelin/openzeppelin-contracts
   Copyright:
+    Copyright 2016 Smart Contract Solutions Inc
     Copyright 2016-2025 Zeppelin Group Ltd
     Copyright 2016-2026 Zeppelin Group Ltd
     Copyright 2020 Compound Labs; Inc.
@@ -467,7 +372,6 @@ COMPONENT ATTRIBUTIONS
     Copyright (c) 2016-2020 zOS Global Limited
     Copyright (c) 2016-2022 zOS Global Limited and contributors
     Copyright (c) 2016-2023 zOS Global Limited and contributors
-    Copyright 2020 Compound Labs; Inc.
     Copyright 2020-2021 Optimism
     Copyright 2021-2022; Offchain Labs; Inc.
   License: MIT
@@ -490,25 +394,16 @@ COMPONENT ATTRIBUTIONS
   Source: https://github.com/openzeppelin/openzeppelin-contracts-upgradeable
   PURL: pkg:github/openzeppelin/openzeppelin-contracts-upgradeable
   Copyright:
+    Copyright 2016 Smart Contract Solutions Inc
     Copyright 2016-2025 Zeppelin Group Ltd
     Copyright 2016-2026 Zeppelin Group Ltd
     Copyright 2020 Compound Labs; Inc.
-    Copyright (c) 2016 Smart Contract Solutions; Inc.
     Copyright (c) 2016-2020 zOS Global Limited
     Copyright (c) 2016-2022 zOS Global Limited and contributors
     Copyright (c) 2016-2023 zOS Global Limited and contributors
-    Copyright 2020 Compound Labs; Inc.
     Copyright 2020-2021 Optimism
     Copyright 2021-2022; Offchain Labs; Inc.
   License: MIT
-
-  pqlab
-  Version: v.0.1
-  Source: https://github.com/ombudsmanviktor/pqlab
-  PURL: pkg:github/ombudsmanviktor/pqlab
-  Copyright:
-    Copyright 2007 Free Software Foundation Inc.  https:  fsf.org
-  License: GPL-3.0-only
 
   projects
   Version: 40192f8
@@ -518,6 +413,12 @@ COMPONENT ATTRIBUTIONS
     (C) 2007 Free Software Foundation; Inc. <https:  fsf.org >
     (c) 2021 Toubkal Lab
     Copyright (c) 2021 Dmitry
+  License: MIT
+
+  setup-helpers
+  Version: 3e1cfb2
+  Source: https://github.com/recon-fuzz/setup-helpers
+  PURL: pkg:github/recon-fuzz/setup-helpers
   License: MIT
 
   solidity-attestation-service
@@ -542,13 +443,6 @@ COMPONENT ATTRIBUTIONS
   PURL: pkg:github/settlemint/solidity-token-erc20
   Copyright:
     Copyright 2024 SettleMint
-    Copyright (c) 2024 SettleMint
-  License: MIT
-
-  sparkstack
-  Version: sparkstack-ui@0.9.3
-  Source: https://github.com/prodkt/sparkstack
-  PURL: pkg:github/prodkt/sparkstack
   License: MIT
 
   spilnotaxyz-contracts
@@ -575,15 +469,30 @@ COMPONENT ATTRIBUTIONS
     Copyright 2020 Compound Labs; Inc.
   License: MIT
 
-  zama-fhe
-  Version: b30264a
-  Source: https://github.com/0xmoei/zama-fhe
-  PURL: pkg:github/0xmoei/zama-fhe
-  License: UNKNOWN — requires manual review
+  wavs-middleware
+  Version: 0.4.0-beta.1
+  Source: https://www.npmjs.com/package/wavs-middleware
+  PURL: pkg:npm/wavs-middleware
+  License: MIT
 
 ------------------------------------------------------------
 
 FULL LICENSE TEXTS
+
+--- ISC ---
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+
 
 --- MIT ---
 
@@ -606,19 +515,32 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 
---- ISC ---
+--- BSD-3-Clause ---
 
-Permission to use, copy, modify, and/or distribute this software for any
-purpose with or without fee is hereby granted, provided that the above
-copyright notice and this permission notice appear in all copies.
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
 
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
-REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
-AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
-INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
-LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
-OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-PERFORMANCE OF THIS SOFTWARE.
+1. Redistributions of source code must retain the above copyright notice,
+   this list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+3. Neither the name of the copyright holder nor the names of its contributors
+   may be used to endorse or promote products derived from this software
+   without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 --- Apache-2.0 ---
@@ -634,24 +556,6 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-
-
---- GPL-3.0-or-later ---
-
-This library is free software; you can redistribute it and/or modify it
-under the terms of the GNU Lesser General Public License as published by
-the Free Software Foundation; either version 3 of the License, or (at
-your option) any later version.
-
-This library is distributed in the hope that it will be useful, but WITHOUT
-ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
-details.
-
-You should have received a copy of the GNU Lesser General Public License
-along with this library; if not, see <https://www.gnu.org/licenses/>.
-
-Full license text: https://www.gnu.org/licenses/lgpl-3.0.html
 
 
 --- GPL-3.0-only ---
@@ -794,6 +698,23 @@ SOFTWARE.
 Full license text available at: https://spdx.org/licenses/UNLICENSED.html
 
 
+--- AGPL-3.0 ---
+
+This program is free software: you can redistribute it and/or modify it
+under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, version 3 of the License.
+
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
+
+Full license text: https://www.gnu.org/licenses/agpl-3.0.html
+
+
 --- AGPL-3.0-only ---
 
 This program is free software: you can redistribute it and/or modify it
@@ -838,30 +759,20 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
---- BSD-3-Clause ---
+--- GPL-3.0-or-later ---
 
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
+This library is free software; you can redistribute it and/or modify it
+under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation; either version 3 of the License, or (at
+your option) any later version.
 
-1. Redistributions of source code must retain the above copyright notice,
-   this list of conditions and the following disclaimer.
+This library is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+details.
 
-2. Redistributions in binary form must reproduce the above copyright notice,
-   this list of conditions and the following disclaimer in the documentation
-   and/or other materials provided with the distribution.
+You should have received a copy of the GNU Lesser General Public License
+along with this library; if not, see <https://www.gnu.org/licenses/>.
 
-3. Neither the name of the copyright holder nor the names of its contributors
-   may be used to endorse or promote products derived from this software
-   without specific prior written permission.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+Full license text: https://www.gnu.org/licenses/lgpl-3.0.html
 
