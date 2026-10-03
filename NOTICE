@@ -2,7 +2,7 @@ THIRD-PARTY SOFTWARE NOTICES AND INFORMATION
 ============================================================
 
 Project: UNIVersalPrivacyHook
-Generated: 2026-09-27
+Generated: 2026-10-03
 Tool: SCANOSS (snippet detection with License dataset)
 Components: 53
 
@@ -15,7 +15,6 @@ notices as required by those licenses.
 WARNING: The following component(s) have no license information.
 These require manual review to determine licensing terms.
 
-  - fhevm-sdk-universal (https://www.npmjs.com/package/fhevm-sdk-universal)
   - kamaji-console (https://github.com/clastix/kamaji-console)
 
 ------------------------------------------------------------
@@ -35,6 +34,7 @@ LICENSE SUMMARY
   GPL-3.0-or-later [COPYLEFT]: 1 component(s)
   ISC: 4 component(s)
   MIT: 31 component(s)
+  UNKNOWN: 1 component(s)
   UNLICENSED: 1 component(s)
 
 ------------------------------------------------------------
@@ -239,7 +239,7 @@ COMPONENT ATTRIBUTIONS
   Version: 0.1.0
   Source: https://www.npmjs.com/package/fhevm-sdk-universal
   PURL: pkg:npm/fhevm-sdk-universal
-  License: UNKNOWN — requires manual review
+  License: UNKNOWN
 
   forge-std
   Version: v1.9.4
@@ -757,6 +757,11 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+--- UNKNOWN ---
+
+Full license text available at: https://spdx.org/licenses/UNKNOWN.html
 
 
 --- GPL-3.0-or-later ---
