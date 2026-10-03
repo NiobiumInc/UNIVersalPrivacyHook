@@ -1,0 +1,22 @@
+{
+  "curations": {
+    "@trinkler/htlc": {
+      "license": "UNKNOWN",
+      "reviewed": null,
+      "reviewer": null,
+      "note": "Not on GitHub: https://www.npmjs.com/package/%40trinkler/htlc"
+    },
+    "fhevm-sdk-universal": {
+      "license": "UNKNOWN",
+      "reviewed": null,
+      "reviewer": null,
+      "note": "Not on GitHub: https://www.npmjs.com/package/fhevm-sdk-universal"
+    },
+    "zama-fhe": {
+      "license": "UNKNOWN",
+      "reviewed": null,
+      "reviewer": null,
+      "note": "No license found at github.com/0xmoei/zama-fhe"
+    }
+  }
+}
